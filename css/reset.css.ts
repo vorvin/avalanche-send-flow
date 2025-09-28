@@ -22,7 +22,6 @@ const button = style({
   justifyContent: 'center',
   alignItems: 'center',
   textAlign: 'center',
-  background: 'none',
   appearance: 'none',
   cursor: 'pointer',
   outline: 'none',

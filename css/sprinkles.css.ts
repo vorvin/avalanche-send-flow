@@ -325,7 +325,8 @@ const colorProperties = defineProperties({
   conditions: {
     base: {},
     hover: { selector: '&:hover' },
-    active: { selector: '&:active' }
+    active: { selector: '&:active' },
+    disabled: { selector: '&:disabled' }
   },
   defaultCondition: 'base',
   properties: {
