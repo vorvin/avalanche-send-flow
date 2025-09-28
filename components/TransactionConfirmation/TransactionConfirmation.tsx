@@ -2,7 +2,6 @@
 
 import React, { useMemo } from 'react'
 
-import { AnimatePresence } from 'framer-motion'
 import { useParams, useRouter } from 'next/navigation'
 import { Address, Chain, TransactionReceipt } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'

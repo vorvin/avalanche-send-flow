@@ -4,13 +4,13 @@ import { Navbar } from '~/components/Navbar/Navbar'
 import { TransactionConfirmation } from '~/components/TransactionConfirmation/TransactionConfirmation'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     hash: string
-  }
+  }>
 }
 
-export default function TransactionConfirmationPage({ params }: PageProps) {
-  const { hash } = params
+export default async function TransactionConfirmationPage({ params }: PageProps) {
+  const { hash } = await params
 
   return (
     <Box minHeight="screen" display="flex" flexDirection="column" alignItems="center" flex="1">
