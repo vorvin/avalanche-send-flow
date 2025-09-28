@@ -1,18 +1,16 @@
-import { erc20Abi } from 'viem'
 import { avalancheFuji } from 'viem/chains'
 import { Box } from '~/components/Box/Box'
-import { Send } from '~/components/Send/Send'
+import { TransactionConfirmation } from '~/components/TransactionConfirmation/TransactionConfirmation'
 
-const USDC_TOKEN = {
-  address: '0x5425890298aed601595a70AB815c96711a31Bc65',
-  name: 'USD Coin',
-  symbol: 'USDC',
-  decimals: 6,
-  logo: '/usdc.png',
-  abi: erc20Abi
-} as const
+interface PageProps {
+  params: {
+    hash: string
+  }
+}
 
-export default function SendPage() {
+export default function TransactionConfirmationPage({ params }: PageProps) {
+  const { hash } = params
+
   return (
     <Box minHeight="screen" display="flex" flexDirection="column" alignItems="center" flex="1">
       <Box
@@ -24,7 +22,7 @@ export default function SendPage() {
         justifyContent="center"
       >
         <Box display="flex" flexDirection="column" flex="1" maxHeight="700">
-          <Send token={USDC_TOKEN} chain={avalancheFuji} />
+          <TransactionConfirmation hash={hash as string} chain={avalancheFuji} />
         </Box>
       </Box>
     </Box>

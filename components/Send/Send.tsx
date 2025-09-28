@@ -1,13 +1,10 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React from 'react'
 
-import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useRouter } from 'next/navigation'
 import { Chain } from 'viem'
-import { useAccount, useReadContract, useSwitchChain } from 'wagmi'
-import { touchableStyles } from '~/css/touchableStyles'
-import { isAddress } from '~/utils/address'
-import { isSufficientBalance } from '~/utils/bignumber'
+import { useSend } from '~/hooks/useSend'
 import { sendButtonStyles } from '~/utils/styles'
 import { Token } from '~/utils/types'
 
@@ -15,7 +12,6 @@ import { AddressInput } from '../AddressInput/AddressInput'
 import { Box } from '../Box/Box'
 import { Button } from '../Button/Button'
 import { TokenInput } from '../TokenInput/TokenInput'
-import { Close } from '../icons/Close'
 
 interface SendProps {
   token: Token
@@ -23,86 +19,23 @@ interface SendProps {
 }
 
 export function Send({ token, chain }: SendProps) {
-  const [tokenInputValue, setTokenInputValue] = useState('')
-  const [addressInputValue, setAddressInputValue] = useState('')
-
-  const { address, isConnected, chainId } = useAccount()
-  const { switchChain, isPending } = useSwitchChain()
-  const { openConnectModal, connectModalOpen } = useConnectModal()
-
-  const { data: balance = BigInt(0) } = useReadContract({
-    abi: token.abi,
-    address: token.address,
-    functionName: 'balanceOf',
-    args: [address!],
-    query: {
-      enabled: Boolean(address)
-    }
-  })
-
+  const router = useRouter()
   const {
-    onClick: onClickSendButton,
     isLoading: isLoadingSendButton,
     disabled: disabledSendButton,
-    children: childrenSendButton
-  } = useMemo(() => {
-    if (!isConnected) {
-      return {
-        onClick: openConnectModal,
-        isLoading: connectModalOpen,
-        disabled: connectModalOpen,
-        children: connectModalOpen ? 'Connecting...' : 'Connect Wallet'
-      }
-    }
-
-    if (chainId !== chain.id) {
-      return {
-        onClick: () => switchChain({ chainId: chain.id }),
-        isLoading: isPending,
-        disabled: isPending,
-        children: isPending ? 'Switching...' : 'Switch Network'
-      }
-    }
-
-    if (!tokenInputValue) {
-      return {
-        disabled: true,
-        children: 'Enter valid amount'
-      }
-    }
-
-    if (!addressInputValue || !isAddress(addressInputValue)) {
-      return {
-        disabled: true,
-        children: 'Enter valid address'
-      }
-    }
-
-    if (!isSufficientBalance((balance as bigint).toString(), tokenInputValue)) {
-      return {
-        disabled: true,
-        children: 'Insufficient balance'
-      }
-    }
-
-    return {
-      onClick: () => {},
-      isLoading: false,
-      disabled: false,
-      children: 'Send'
-    }
-  }, [
-    isConnected,
-    chainId,
-    chain.id,
+    children: childrenSendButton,
+    onClick: onClickSendButton,
     tokenInputValue,
     addressInputValue,
-    balance,
-    openConnectModal,
-    connectModalOpen,
-    isPending,
-    switchChain
-  ])
+    setTokenInputValue,
+    setAddressInputValue
+  } = useSend({
+    token,
+    chain,
+    onSend: hash => {
+      router.push(`/transaction/confirmation/${hash}`)
+    }
+  })
 
   return (
     <Box
@@ -125,23 +58,7 @@ export function Send({ token, chain }: SendProps) {
         gap="12"
         minHeight="40"
       >
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          color="white80"
-          background="blueGrey100"
-          borderWidth="1"
-          borderColor="blueGrey90"
-          borderStyle="solid"
-          transition="transform"
-          className={touchableStyles({ active: 'shrinkLg', hover: 'growLg' })}
-          borderRadius="full"
-          height="36"
-          width="36"
-        >
-          <Close height={12} width={12} />
-        </Box>
+        <Box width="40" height="40" />
 
         <Box as="p" fontSize="20" fontWeight="heavy" fontFamily="rounded" color="white100">
           Send
