@@ -2,6 +2,7 @@
 
 import React, { useMemo } from 'react'
 
+import { AnimatePresence } from 'framer-motion'
 import { useParams, useRouter } from 'next/navigation'
 import { Address, Chain, TransactionReceipt } from 'viem'
 import { useWaitForTransactionReceipt } from 'wagmi'
@@ -69,6 +70,7 @@ export function TransactionConfirmation({ hash, chain }: TransactionConfirmation
       </Box>
 
       <TransactionStatus
+        key={status}
         status={status}
         onViewOnExplorer={() => {
           const chainExplorer = getChainExplorer(chain)

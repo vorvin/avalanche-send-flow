@@ -38,6 +38,7 @@ export function TransactionStatus({ status, onViewOnExplorer, onGoBack }: Transa
   if (status === 'pending') {
     return (
       <Box
+        as={motion.div}
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -56,7 +57,14 @@ export function TransactionStatus({ status, onViewOnExplorer, onGoBack }: Transa
           <Spinner width={82} height={82} />
         </Box>
 
-        <Box as="p" fontSize="20" fontWeight="heavy" fontFamily="rounded" color="white100">
+        <Box
+          as="p"
+          fontSize="20"
+          fontWeight="heavy"
+          fontFamily="rounded"
+          color="white100"
+          textAlign="center"
+        >
           Confirming transaction...
         </Box>
       </Box>
@@ -66,6 +74,7 @@ export function TransactionStatus({ status, onViewOnExplorer, onGoBack }: Transa
   if (status === 'success') {
     return (
       <Box
+        as={motion.div}
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -85,7 +94,14 @@ export function TransactionStatus({ status, onViewOnExplorer, onGoBack }: Transa
           <Checkmark width={82} height={82} />
         </Box>
 
-        <Box as="p" fontSize="20" fontWeight="heavy" fontFamily="rounded" color="white100">
+        <Box
+          as="p"
+          fontSize="20"
+          fontWeight="heavy"
+          fontFamily="rounded"
+          color="white100"
+          textAlign="center"
+        >
           Transaction successful
         </Box>
 
@@ -113,6 +129,7 @@ export function TransactionStatus({ status, onViewOnExplorer, onGoBack }: Transa
   if (status === 'failed') {
     return (
       <Box
+        as={motion.div}
         display="flex"
         alignItems="center"
         justifyContent="center"
@@ -132,7 +149,14 @@ export function TransactionStatus({ status, onViewOnExplorer, onGoBack }: Transa
           <Close width={82} height={82} />
         </Box>
 
-        <Box as="p" fontSize="20" fontWeight="heavy" fontFamily="rounded" color="white100">
+        <Box
+          as="p"
+          fontSize="20"
+          fontWeight="heavy"
+          fontFamily="rounded"
+          color="white100"
+          textAlign="center"
+        >
           Transaction failed
         </Box>
 
