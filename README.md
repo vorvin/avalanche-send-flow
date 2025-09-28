@@ -1,4 +1,4 @@
-# Ava Labs Take Home Assignment
+# Introduction
 
 A web3 app that allows you to transfer USDC (ERC-20) tokens on Avalanche Fuji C-Chain (testnet) to another address.
 
